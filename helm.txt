@@ -1,0 +1,13 @@
+helm repo add elastic https://helm.elastic.co
+helm repo update
+helm install elasticsearch elastic/elasticsearch
+helm install kibana elastic/kibana
+
+
+kubectl apply -f deployment.yml
+kubectl apply -f service.yaml
+kubectl apply -f ingress.yml
+
+kubectl get pods
+kubectl get svc
+kubectl get ingress
