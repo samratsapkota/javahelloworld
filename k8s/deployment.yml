@@ -24,4 +24,5 @@ spec:
               mountPath: /usr/local/tomcat/logs
       volumes:
         - name: log-volume
-          emptyDir: {}
+          hostPath:
+            path: /var/log/tomcat-logs

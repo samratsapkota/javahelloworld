@@ -16,13 +16,14 @@ spec:
           image: docker.elastic.co/beats/filebeat:7.17.3
           volumeMounts:
             - name: log-volume
-              mountPath: /usr/local/tomcat/logs
+              mountPath: /var/log/tomcat-logs
             - name: filebeat-config
               mountPath: /usr/share/filebeat/filebeat.yml
               subPath: filebeat.yml
       volumes:
         - name: log-volume
-          emptyDir: {}
+          hostPath:
+            path: /var/log/tomcat-logs 
         - name: filebeat-config
           configMap:
             name: filebeat-config
