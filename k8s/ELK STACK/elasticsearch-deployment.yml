@@ -6,7 +6,7 @@ metadata:
     app: elasticsearch
 spec:
   serviceName: "elasticsearch"
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: elasticsearch
@@ -23,10 +23,12 @@ spec:
               value: "single-node"  # Change this for multi-node setup
           ports:
             - containerPort: 9200
+              name: http
             - containerPort: 9300
+              name: transport
           volumeMounts:
             - name: elasticsearch-data
-              mountPath: /usr/share/elasticsearch/data
+              mountPath: /var/lib/elasticsearch/data
       volumes:
         - name: elasticsearch-data
           persistentVolumeClaim:
@@ -41,8 +43,10 @@ spec:
   ports:
     - port: 9200
       targetPort: 9200
+      name: http
     - port: 9300
       targetPort: 9300
+      name: transport
   clusterIP: None  # This is for StatefulSet; change for other types
   selector:
     app: elasticsearch
@@ -58,3 +62,18 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  storageClassName: standard
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elasticsearch-pv
+spec:
+  capacity:
+    storage: 5Gi  # Must match PVC size (5Gi here)
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard  # Change this based on your environment
+  hostPath:
+    path: /mnt/data/elasticsearch  # Change this to a valid path on your host

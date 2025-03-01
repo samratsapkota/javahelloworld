@@ -7,6 +7,6 @@ data:
     filebeat.inputs:
       - type: log
         paths:
-          - /var/log/app/*.log
+          - /usr/local/tomcat/logs/*.log
     output.elasticsearch:
       hosts: ["logstash:5044"]
