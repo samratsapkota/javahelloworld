@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: filebeat
-          image: docker.elastic.co/beats/filebeat:7.17.3
+          image: docker.elastic.co/beats/filebeat:7.10.0
           volumeMounts:
             - name: log-volume
               mountPath: /var/log/tomcat-logs
