@@ -23,7 +23,7 @@ spec:
       volumes:
         - name: log-volume
           hostPath:
-            path: /var/log/containers
+            path: /var/log/pods
         - name: filebeat-config
           configMap:
             name: filebeat-config
